@@ -1,6 +1,7 @@
-# Audio Transcription
+# Project : SpiderBots
+# File : Audio Transcription Class for STT using Whisper
 # Author : Tej Pandit
-# Date : Jan 2023
+# Date : Dec 2023
 
 import whisper
 import torch
