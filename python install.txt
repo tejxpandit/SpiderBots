@@ -1,0 +1,25 @@
+# FFMPEG
+download ffmpeg (from https://www.gyan.dev/ffmpeg/builds/   -->> release builds -->> ffmpeg-release-essentials.zip ) 
+unzip and rename to "ffmpeg" and move to ".....users/name/Appdata" 
+add to path ".....users/name/Appdata/ffmpeg/bin"
+
+# PYTHON 
+conda create -n ai_bot python=3.9
+
+pip install pyaudio
+pip install pynput
+pip install serial
+conda install pytorch torchvision torchaudio pytorch-cuda=11.6 -c pytorch -c nvidia
+
+# pip install soundslike
+# IDK if GPU is faster
+
+
+# WHISPER
+pip install git+https://github.com/openai/whisper.git
+pip install --upgrade --no-deps --force-reinstall git+https://github.com/openai/whisper.git
+
+
+# YOLO v5
+pip install -r https://raw.githubusercontent.com/ultralytics/yolov5/master/requirements.txt
+
