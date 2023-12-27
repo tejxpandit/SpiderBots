@@ -3,112 +3,52 @@
 # Author : Tej Pandit
 # Date : Dec 2023
 
-# from inputs import get_gamepad
+import pygame
 
-# def main():
-#     """Just print out some event infomation when the gamepad is used."""
-#     while 1:
-#         events = get_gamepad()
-#         for event in events:
-#             print(event.ev_type, event.code, event.state)
+# Initialize Pygame
+pygame.init()
 
-# if __name__ == "__main__":
-#     main()
+# Create a joystick object
+joystick = pygame.joystick.Joystick(0)
 
-from inputs import get_gamepad
-import math
-import threading
+# Get the number of buttons on the controller
+num_buttons = joystick.get_numbuttons()
 
-class XboxController(object):
-    MAX_TRIG_VAL = math.pow(2, 8)
-    MAX_JOY_VAL = math.pow(2, 15)
+# Get the name of the controller
+controller_name = joystick.get_name()
 
-    def __init__(self):
+# Print some information about the controller
+print("Controller name:", controller_name)
+print("Number of buttons:", num_buttons)
 
-        self.LeftJoystickY = 0
-        self.LeftJoystickX = 0
-        self.RightJoystickY = 0
-        self.RightJoystickX = 0
-        self.LeftTrigger = 0
-        self.RightTrigger = 0
-        self.LeftBumper = 0
-        self.RightBumper = 0
-        self.A = 0
-        self.X = 0
-        self.Y = 0
-        self.B = 0
-        self.LeftThumb = 0
-        self.RightThumb = 0
-        self.Back = 0
-        self.Start = 0
-        self.LeftDPad = 0
-        self.RightDPad = 0
-        self.UpDPad = 0
-        self.DownDPad = 0
+# Start the main game loop
+start = True
+while start:
 
-        self._monitor_thread = threading.Thread(target=self._monitor_controller, args=())
-        self._monitor_thread.daemon = True
-        self._monitor_thread.start()
+    # Check for events
+    for event in pygame.event.get():
 
+        # If the event is a joystick button press
+        if event.type == pygame.JOYHATMOTION:
 
-    def read(self): # return the buttons/triggers that you care about in this methode
-        x = self.LeftJoystickX
-        y = self.LeftJoystickY
-        a = self.A
-        b = self.X # b=1, x=2
-        rb = self.RightBumper
-        return [x, y, a, b, rb]
+            # Get the button that was pressed
+            hat = event.hat
+            hat_direction = joystick.get_hat(hat)
 
+            # print(hat_direction)
 
-    def _monitor_controller(self):
-        while True:
-            events = get_gamepad()
-            for event in events:
-                if event.code == 'ABS_Y':
-                    self.LeftJoystickY = event.state / XboxController.MAX_JOY_VAL # normalize between -1 and 1
-                elif event.code == 'ABS_X':
-                    self.LeftJoystickX = event.state / XboxController.MAX_JOY_VAL # normalize between -1 and 1
-                elif event.code == 'ABS_RY':
-                    self.RightJoystickY = event.state / XboxController.MAX_JOY_VAL # normalize between -1 and 1
-                elif event.code == 'ABS_RX':
-                    self.RightJoystickX = event.state / XboxController.MAX_JOY_VAL # normalize between -1 and 1
-                elif event.code == 'ABS_Z':
-                    self.LeftTrigger = event.state / XboxController.MAX_TRIG_VAL # normalize between 0 and 1
-                elif event.code == 'ABS_RZ':
-                    self.RightTrigger = event.state / XboxController.MAX_TRIG_VAL # normalize between 0 and 1
-                elif event.code == 'BTN_TL':
-                    self.LeftBumper = event.state
-                elif event.code == 'BTN_TR':
-                    self.RightBumper = event.state
-                elif event.code == 'BTN_SOUTH':
-                    self.A = event.state
-                elif event.code == 'BTN_NORTH':
-                    self.Y = event.state #previously switched with X
-                elif event.code == 'BTN_WEST':
-                    self.X = event.state #previously switched with Y
-                elif event.code == 'BTN_EAST':
-                    self.B = event.state
-                elif event.code == 'BTN_THUMBL':
-                    self.LeftThumb = event.state
-                elif event.code == 'BTN_THUMBR':
-                    self.RightThumb = event.state
-                elif event.code == 'BTN_SELECT':
-                    self.Back = event.state
-                elif event.code == 'BTN_START':
-                    self.Start = event.state
-                elif event.code == 'BTN_TRIGGER_HAPPY1':
-                    self.LeftDPad = event.state
-                elif event.code == 'BTN_TRIGGER_HAPPY2':
-                    self.RightDPad = event.state
-                elif event.code == 'BTN_TRIGGER_HAPPY3':
-                    self.UpDPad = event.state
-                elif event.code == 'BTN_TRIGGER_HAPPY4':
-                    self.DownDPad = event.state
+            if (hat_direction[0] == 1):
+                print("right")
+            elif (hat_direction[0] == -1):
+                print("left")
+            elif (hat_direction[1] == 1):
+                print("up")
+            elif (hat_direction[1] == -1):
+                print("down")
+            else:
+                print("centered")
 
+    # Update the display
+    # pygame.display.update()
 
-
-
-if __name__ == '__main__':
-    joy = XboxController()
-    while True:
-        print(joy.read())
+pygame.quit()
