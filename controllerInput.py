@@ -18,8 +18,8 @@ num_buttons = joystick.get_numbuttons()
 controller_name = joystick.get_name()
 
 # Print some information about the controller
-print("Controller name:", controller_name)
-print("Number of buttons:", num_buttons)
+# print("Controller name:", controller_name)
+# print("Number of buttons:", num_buttons)
 
 # Start the main game loop
 start = True
