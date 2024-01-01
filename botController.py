@@ -1,6 +1,7 @@
-# Bot Controller
+# Project : SpiderBots
+# File : Serial Port Communication
 # Author : Tej Pandit
-# Date : Jan 2023
+# Date : Dec 2023
 
 from serial import Serial
 
